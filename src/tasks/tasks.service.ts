@@ -4,12 +4,13 @@ import { Model } from 'mongoose';
 import { Task } from 'src/schemas/tasks.schema';
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
+
 @Injectable()
 export class TasksService {
   constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
   findAll() {
-    this.taskModel.find();
+    return this.taskModel.find();
   }
 
   async create(createTask: CreateTaskDto) {
@@ -26,6 +27,6 @@ export class TasksService {
   }
 
   async update(id: string, task: UpdateTaskDto) {
-    return this.taskModel.findByIdAndUpdate(id, task);
+    return this.taskModel.findByIdAndUpdate(id, task, { new: true });
   }
 }
